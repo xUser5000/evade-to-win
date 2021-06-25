@@ -20,7 +20,6 @@ public class Game {
 
     private static final float DEFAULT_RADIUS = 25;
     private static final float DEFAULT_SPEED = 5;
-    private static final int[] DEFAULT_COLOR = {52, 152, 219};
 
     public Game (int width, int height) {
         this.width = width;
@@ -32,12 +31,12 @@ public class Game {
         coin = new Particle(
                 new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
                 DEFAULT_RADIUS,
-                DEFAULT_COLOR
+                Constants.COLOR_YELLOW
         );
         player = new MoverParticle(
                 new Vector(width/2, height/2),
                 DEFAULT_RADIUS,
-                DEFAULT_COLOR,
+                Constants.COLOR_BLUE,
                 new Vector(0, 0)
         );
         enemies = new ArrayList<>();
