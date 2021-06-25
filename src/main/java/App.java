@@ -19,9 +19,15 @@ public class App extends PApplet {
     @Override
     public void draw() {
         background(255);
+
         if (game.hasPlayerReachedCoin()) {
             game.levelUp();
         }
+
+        if (game.hasPlayerHitEnemy()) {
+            game.init();
+        }
+
         game.setMouse(new Vector(mouseX, mouseY));
         game.update();
         drawer.draw();

@@ -88,6 +88,13 @@ public class Game {
         return collision(player, coin);
     }
 
+    public boolean hasPlayerHitEnemy () {
+        for (Particle enemy: enemies) {
+            if (collision(player, enemy)) return true;
+        }
+        return false;
+    }
+
     private boolean collision (Particle a, Particle b) {
         return VectorUtil.distance(a.getPosition(), b.getPosition()) <= a.getRadius() + b.getRadius();
     }
