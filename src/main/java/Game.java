@@ -18,8 +18,8 @@ public class Game {
     @Setter private Vector mouse;
     private int pointsCount;
 
-    private static final float DEFAULT_RADIUS = 25;
-    private static final float DEFAULT_SPEED = 5;
+    private static float DEFAULT_RADIUS = 25;
+    private static float MAX_SPEED = 5;
 
     public Game (int width, int height) {
         this.width = width;
@@ -50,10 +50,27 @@ public class Game {
         else {
             player.setVelocity(VectorUtil.scale(
                     VectorUtil.normalize(diff),
-                    DEFAULT_SPEED
+                    MAX_SPEED
             ));
         }
         player.update();
     }
 
+    public void levelUp () {
+        pointsCount++;
+        MAX_SPEED++;
+        coin = new Particle(
+                new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
+                DEFAULT_RADIUS,
+                Constants.COLOR_YELLOW
+        );
+    }
+
+    public boolean hasPlayerReachedCoin () {
+        return collision(player, coin);
+    }
+
+    private boolean collision (Particle a, Particle b) {
+        return VectorUtil.distance(a.getPosition(), b.getPosition()) <= a.getRadius() + b.getRadius();
+    }
 }
