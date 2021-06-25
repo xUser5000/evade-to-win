@@ -19,7 +19,7 @@ public class Game {
     private int pointsCount;
 
     private static float DEFAULT_RADIUS = 25;
-    private static float MAX_SPEED = 5;
+    private static float MAX_SPEED = 15;
 
     public Game (int width, int height) {
         this.width = width;
@@ -46,7 +46,7 @@ public class Game {
 
     public void update () {
         Vector diff = VectorUtil.subtract(mouse, player.getPosition());
-        if (VectorUtil.magnitude(diff) < 10) player.setVelocity(new Vector(0, 0));
+        if (VectorUtil.magnitude(diff) < player.getRadius()) player.setVelocity(new Vector(0, 0));
         else {
             player.setVelocity(VectorUtil.scale(
                     VectorUtil.normalize(diff),
@@ -58,7 +58,6 @@ public class Game {
 
     public void levelUp () {
         pointsCount++;
-        MAX_SPEED++;
         coin = new Particle(
                 new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
                 DEFAULT_RADIUS,
