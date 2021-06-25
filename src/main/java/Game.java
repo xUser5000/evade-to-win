@@ -42,13 +42,12 @@ public class Game {
     }
 
     public void update () {
+        // diff = mouse - player position
         Vector diff = VectorUtil.subtract(mouse, player.getPosition());
-        if (VectorUtil.magnitude(diff) < player.getRadius()) player.setVelocity(new Vector(0, 0));
-        else {
-            player.setVelocity(VectorUtil.scale(
-                    VectorUtil.normalize(diff),
-                    Constants.PLAYER_SPEED
-            ));
+        if (VectorUtil.magnitude(diff) < player.getRadius()) {
+            player.setVelocity(new Vector(0, 0));
+        } else {
+            player.setVelocity(VectorUtil.setMagnitude(diff, Constants.PLAYER_SPEED));
         }
         player.update();
 
@@ -77,10 +76,8 @@ public class Game {
                     new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
                     Constants.DEFAULT_RADIUS,
                     Constants.COLOR_RED,
-                    VectorUtil.scale(
-                            VectorUtil.normalize(
-                                    new Vector(MathUtil.random(0, width), MathUtil.random(0, height))
-                            ),
+                    VectorUtil.setMagnitude(
+                            new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
                             Constants.ENEMY_SPEED
                     )
                 )
