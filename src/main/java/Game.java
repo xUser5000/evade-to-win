@@ -18,9 +18,6 @@ public class Game {
     @Setter private Vector mouse;
     private int pointsCount;
 
-    private static float DEFAULT_RADIUS = 25;
-    private static float MAX_SPEED = 15;
-
     public Game (int width, int height) {
         this.width = width;
         this.height = height;
@@ -30,12 +27,12 @@ public class Game {
     public void init () {
         coin = new Particle(
                 new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
-                DEFAULT_RADIUS,
+                Constants.DEFAULT_RADIUS,
                 Constants.COLOR_YELLOW
         );
         player = new MoverParticle(
                 new Vector(width/2, height/2),
-                DEFAULT_RADIUS,
+                Constants.DEFAULT_RADIUS,
                 Constants.COLOR_BLUE,
                 new Vector(0, 0)
         );
@@ -50,7 +47,7 @@ public class Game {
         else {
             player.setVelocity(VectorUtil.scale(
                     VectorUtil.normalize(diff),
-                    MAX_SPEED
+                    Constants.PLAYER_SPEED
             ));
         }
         player.update();
@@ -70,7 +67,7 @@ public class Game {
         pointsCount++;
         coin = new Particle(
                 new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
-                DEFAULT_RADIUS,
+                Constants.DEFAULT_RADIUS,
                 Constants.COLOR_YELLOW
         );
 
@@ -78,26 +75,16 @@ public class Game {
         enemies.add(
                 new MoverParticle(
                     new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
-                    DEFAULT_RADIUS,
+                    Constants.DEFAULT_RADIUS,
                     Constants.COLOR_RED,
                     VectorUtil.scale(
                             VectorUtil.normalize(
                                     new Vector(MathUtil.random(0, width), MathUtil.random(0, height))
                             ),
-                            MAX_SPEED
+                            Constants.ENEMY_SPEED
                     )
                 )
         );
-
-        // Increase the speed of the enemies
-        for (MoverParticle enemy: enemies) {
-            enemy.setVelocity(
-                    VectorUtil.scale(
-                            VectorUtil.normalize(enemy.getVelocity()),
-                            MAX_SPEED
-                    )
-            );
-        }
     }
 
     public boolean hasPlayerReachedCoin () {

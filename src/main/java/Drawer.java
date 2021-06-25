@@ -13,18 +13,7 @@ public class Drawer {
         drawParticle(game.getCoin());
         drawParticle(game.getPlayer());
         for (Particle enemy: game.getEnemies()) drawParticle(enemy);
-    }
-
-    private void drawMouse () {
-        context.noFill();
-        context.stroke(10);
-        context.strokeWeight(5);
-        context.ellipse(
-                game.getMouse().getX(),
-                game.getMouse().getY(),
-                50,
-                50
-        );
+        printPoints();
     }
 
     private void drawParticle (Particle particle) {
@@ -42,7 +31,9 @@ public class Drawer {
         context.fill(color[0], color[1], color[2]);
     }
 
-    private void stroke (int[] color) {
-        context.stroke(color[0], color[1], color[2]);
+    private void printPoints () {
+        context.textSize(32);
+        fill(Constants.COLOR_BLACK);
+        context.text("Points: " + game.getPointsCount(), 10, 30);
     }
 }
