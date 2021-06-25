@@ -12,6 +12,7 @@ public class Drawer {
         context.noStroke();
         drawParticle(game.getCoin());
         drawParticle(game.getPlayer());
+        for (Particle enemy: game.getEnemies()) drawParticle(enemy);
     }
 
     private void drawMouse () {

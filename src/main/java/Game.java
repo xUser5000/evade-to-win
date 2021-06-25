@@ -1,6 +1,6 @@
 import lombok.Setter;
-import vector.Vector;
 import lombok.Getter;
+import vector.Vector;
 import particles.MoverParticle;
 import particles.Particle;
 import vector.VectorUtil;
@@ -54,6 +54,16 @@ public class Game {
             ));
         }
         player.update();
+
+        // Animate all the enemies
+        for (MoverParticle enemy: enemies) {
+            enemy.update();
+            float x = enemy.getPosition().getX();
+            float y = enemy.getPosition().getY();
+            if (x > width) enemy.getPosition().setX(x % width);
+            if (y > height) enemy.getPosition().setY(y % height);
+        }
+
     }
 
     public void levelUp () {
@@ -63,6 +73,31 @@ public class Game {
                 DEFAULT_RADIUS,
                 Constants.COLOR_YELLOW
         );
+
+        // Add a new enemy
+        enemies.add(
+                new MoverParticle(
+                    new Vector(MathUtil.random(0, width), MathUtil.random(0, height)),
+                    DEFAULT_RADIUS,
+                    Constants.COLOR_RED,
+                    VectorUtil.scale(
+                            VectorUtil.normalize(
+                                    new Vector(MathUtil.random(0, width), MathUtil.random(0, height))
+                            ),
+                            MAX_SPEED
+                    )
+                )
+        );
+
+        // Increase the speed of the enemies
+        for (MoverParticle enemy: enemies) {
+            enemy.setVelocity(
+                    VectorUtil.scale(
+                            VectorUtil.normalize(enemy.getVelocity()),
+                            MAX_SPEED
+                    )
+            );
+        }
     }
 
     public boolean hasPlayerReachedCoin () {
